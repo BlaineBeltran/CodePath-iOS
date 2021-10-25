@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var billAmountTextFild: UITextField!
     @IBOutlet weak var tipAmountLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
@@ -18,8 +18,14 @@ class ViewController: UIViewController {
     
     private var tip: Double? = nil
     
+
+    
+    //MARK: - Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.billAmountTextFild.delegate = self
+        self.customTipAmount.delegate = self
         self.tipControl.selectedSegmentIndex = 3
     }
     
@@ -32,7 +38,27 @@ class ViewController: UIViewController {
         }
     
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.billAmountTextFild.becomeFirstResponder()
+    }
+    
+    //MARK: - TextField Delegates
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case billAmountTextFild:
+            customTipAmount.becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+            
+        }
+        return false
+    }
 
+    //MARK: - Button Actions
+    
     @IBAction func calculateTipPressed(_ sender: UISegmentedControl) {
         
         customTipAmount.text = ""
@@ -47,6 +73,9 @@ class ViewController: UIViewController {
         
     }
     @IBAction func calculatePressed(_ sender: UIButton) {
+        
+        view.endEditing(true)
+        
         let bill = Double(billAmountTextFild.text!) ?? 0
         if let safeTip = tip {
             let newTip = bill * safeTip
