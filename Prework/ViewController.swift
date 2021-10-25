@@ -14,11 +14,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var customTipAmount: UITextField!
     
+    let defaults = UserDefaults.standard
+    
     private var tip: Double? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tipControl.selectedSegmentIndex = 3
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if defaults.bool(forKey: Constants.darkModeDefaultsKey) == true {
+            view.overrideUserInterfaceStyle = .dark
+        } else {
+            view.overrideUserInterfaceStyle = .light
+        }
+    
     }
 
     @IBAction func calculateTipPressed(_ sender: UISegmentedControl) {
@@ -50,6 +62,9 @@ class ViewController: UIViewController {
             totalLabel.text = String(format: "$%.2f", customTotal)
             
         }
+    }
+    @IBAction func settingPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: Constants.settingsSegueIdentifier, sender: self)
     }
 }
 

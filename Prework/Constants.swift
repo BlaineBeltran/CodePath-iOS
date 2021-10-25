@@ -9,4 +9,5 @@ import UIKit
 
 struct Constants {
     static let settingsSegueIdentifier = "showSettings"
+    static let darkModeDefaultsKey = "DarkModeState"
 }
