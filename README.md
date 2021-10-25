@@ -32,7 +32,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I had trouble dismissing the keyboard without tapping "Calculate" at first, but later found a working solution.
 
 ## License
 
